@@ -3,7 +3,7 @@ Here’s a step-by-step guide to installing React with Vite for creating a new p
 ### 1. **Install Node.js**
    - Ensure you have **Node.js** installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).  
    - Check if Node.js is installed by running the following commands in your terminal:
-     ```bash
+
      node -v
      npm -v
      ```
