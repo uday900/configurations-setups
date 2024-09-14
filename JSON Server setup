@@ -1,0 +1,30 @@
+Installation of JSON Server
+JSON Server is offered as a NPM package. You can install the same by executing the following on the command prompt:
+
+-> npm install -g json-server
+
+JSON File
+Create a JSON file with name employees.json. This file consists of the data, that must be exposed by the REST API. CRUD endpoints are automatically created for objects in the JSON structure.       
+
+The JSON has of one ‘employees’ array which has two objects. Each employee object consists of properties: id, name and designation.
+
+Running the Server
+Start the JSON server by executing the following command:
+
+-> npx json-server --watch employees.json --port 4000
+
+
+As a parameter we need to pass the json file (employees.json).
+The — watch parameter starts the server in watch mode. This means that it watches for any changes in the file and updates the exposed API accordingly.
+The --port specifies the port to run the json-server. The default port number is 3000
+The following HTTP endpoints are automatically created by JSON server:
+
+GET    /employees
+GET    /employees/{id}
+POST   /employees
+
+PUT    /employees/{id}
+
+PATCH  /employees/{id}
+
+DELETE /employees/{id}
