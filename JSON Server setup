@@ -1,3 +1,8 @@
+npm init -y
+npm i json-server
+npm i
+
+
 Installation of JSON Server
 JSON Server is offered as a NPM package. You can install the same by executing the following on the command prompt:
 
