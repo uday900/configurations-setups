@@ -1,0 +1,131 @@
+## ✅ Environment Setup
+
+### 1. Add Dependency for Environment Variables
+
+In your `pom.xml`, add:
+
+```xml
+<dependency>
+    <groupId>io.github.cdimascio</groupId>
+    <artifactId>dotenv-java</artifactId>
+    <!-- <version>3.0.0</version> -->
+</dependency>
+```
+
+---
+
+## ✅ Build the Project
+
+### 2. Open Terminal in Project Root
+
+Run either of the following commands:
+
+```bash
+./mvnw clean package
+```
+
+Or if using Windows:
+
+```bash
+mvnw clean package
+```
+
+### 3. Set Environment Variables
+
+#### On Command Prompt:
+
+```bash
+set APP_NAME="your_app_name"
+```
+
+#### On PowerShell:
+
+```bash
+$env:APP_NAME="your_app_name"
+```
+
+Then run:
+
+```bash
+./mvnw package
+```
+
+> 🟢 A JAR file will be created inside the `/target` directory upon build success.
+
+---
+
+## ✅ Dockerize the Project
+
+### 4. Create a `Dockerfile` in your project root:
+
+```Dockerfile
+# Stage 1: Build Maven image for Spring Boot app
+FROM maven:3.8.4-openjdk-17 AS build
+
+WORKDIR /app
+
+# Copy only pom.xml and resolve dependencies first
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source code
+COPY src ./src
+
+# Build the application, skipping tests
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the app with a slim Java image
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Replace with your actual JAR file name
+COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar .
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "-jar", "/app/backend-0.0.1-SNAPSHOT.jar" ]
+```
+
+---
+
+## ✅ Docker Commands
+
+### 5. Build Docker Image
+
+```bash
+docker build -t demoapp:v1 .
+```
+
+### 6. Tag the Image
+
+```bash
+docker tag demoapp:v1 <your-dockerhub-username>/demoapp:v1
+```
+
+### 7. Push to Docker Hub
+
+```bash
+docker push <your-dockerhub-username>/demoapp:v1
+```
+
+---
+
+## ✅ Deploy to Render
+
+1. Go to [Render Dashboard](https://render.com/)
+2. Select **"Web Service"**
+3. Choose **"Docker Image"**
+4. Enter image path in this format:
+
+```
+docker.io/<your-dockerhub-username>/<image-name>:<tag>
+```
+
+**Example:**
+
+```
+docker.io/udaykirandarla/darlastores:latest
+```
+
+---
